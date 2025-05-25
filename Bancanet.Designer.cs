@@ -33,15 +33,15 @@
             TlStripBanco = new ToolStrip();
             TlStrip_btnInfo = new ToolStripSplitButton();
             TlStrip_btnRegistrarC = new ToolStripMenuItem();
-            toolStripSeparator1 = new ToolStripSeparator();
+            TlStrip_Sep1 = new ToolStripSeparator();
             TlStrip_btnTransacciones = new ToolStripSplitButton();
             TlStrip_btn3MP = new ToolStripMenuItem();
-            TlStripSep1 = new ToolStripSeparator();
+            TlStrip_Sep2 = new ToolStripSeparator();
             TlStrip_btnMostrar = new ToolStripSplitButton();
             TlStrip_btnMClientes = new ToolStripMenuItem();
             TlStrip_btnMCuentas = new ToolStripMenuItem();
             TlStrip_btnMTransacciones = new ToolStripMenuItem();
-            TlStrip_Sep2 = new ToolStripSeparator();
+            TlStrip_Sep3 = new ToolStripSeparator();
             TlStrip_prgBar = new ToolStripProgressBar();
             tbLyPanelBc = new TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)grvBanco).BeginInit();
@@ -63,9 +63,9 @@
             // 
             // TlStripBanco
             // 
-            TlStripBanco.BackColor = SystemColors.Control;
+            TlStripBanco.BackColor = SystemColors.ControlLightLight;
             TlStripBanco.Dock = DockStyle.Fill;
-            TlStripBanco.Items.AddRange(new ToolStripItem[] { TlStrip_btnInfo, toolStripSeparator1, TlStrip_btnTransacciones, TlStripSep1, TlStrip_btnMostrar, TlStrip_Sep2, TlStrip_prgBar });
+            TlStripBanco.Items.AddRange(new ToolStripItem[] { TlStrip_btnInfo, TlStrip_Sep1, TlStrip_btnTransacciones, TlStrip_Sep2, TlStrip_btnMostrar, TlStrip_Sep3, TlStrip_prgBar });
             TlStripBanco.Location = new Point(0, 0);
             TlStripBanco.Name = "TlStripBanco";
             TlStripBanco.RenderMode = ToolStripRenderMode.Professional;
@@ -93,10 +93,10 @@
             TlStrip_btnRegistrarC.Text = "Registrar un nuevo cliente";
             TlStrip_btnRegistrarC.Click += TlStrip_btnRegistrarC_Click;
             // 
-            // toolStripSeparator1
+            // TlStrip_Sep1
             // 
-            toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(6, 60);
+            TlStrip_Sep1.Name = "TlStrip_Sep1";
+            TlStrip_Sep1.Size = new Size(6, 60);
             // 
             // TlStrip_btnTransacciones
             // 
@@ -120,10 +120,10 @@
             TlStrip_btn3MP.Text = "Terceros mismo país";
             TlStrip_btn3MP.Click += TlStrip_btn3MP_Click;
             // 
-            // TlStripSep1
+            // TlStrip_Sep2
             // 
-            TlStripSep1.Name = "TlStripSep1";
-            TlStripSep1.Size = new Size(6, 60);
+            TlStrip_Sep2.Name = "TlStrip_Sep2";
+            TlStrip_Sep2.Size = new Size(6, 60);
             // 
             // TlStrip_btnMostrar
             // 
@@ -133,8 +133,8 @@
             TlStrip_btnMostrar.Image = (Image)resources.GetObject("TlStrip_btnMostrar.Image");
             TlStrip_btnMostrar.ImageTransparentColor = Color.Magenta;
             TlStrip_btnMostrar.Name = "TlStrip_btnMostrar";
-            TlStrip_btnMostrar.Size = new Size(94, 57);
-            TlStrip_btnMostrar.Text = "Mostrar";
+            TlStrip_btnMostrar.Size = new Size(79, 57);
+            TlStrip_btnMostrar.Text = "Datos";
             TlStrip_btnMostrar.TextImageRelation = TextImageRelation.TextBeforeImage;
             TlStrip_btnMostrar.ButtonClick += TlStrip_btnMostrar_ButtonClick;
             // 
@@ -165,10 +165,10 @@
             TlStrip_btnMTransacciones.Text = "Historial de Transacciones";
             TlStrip_btnMTransacciones.Click += TlStrip_btnMTransacciones_Click;
             // 
-            // TlStrip_Sep2
+            // TlStrip_Sep3
             // 
-            TlStrip_Sep2.Name = "TlStrip_Sep2";
-            TlStrip_Sep2.Size = new Size(6, 60);
+            TlStrip_Sep3.Name = "TlStrip_Sep3";
+            TlStrip_Sep3.Size = new Size(6, 60);
             // 
             // TlStrip_prgBar
             // 
@@ -219,14 +219,14 @@
         private ToolStripMenuItem TlStrip_btn3MP;
         private ToolStripSplitButton TlStrip_btnInfo;
         private ToolStripMenuItem TlStrip_btnRegistrarC;
-        private ToolStripSeparator TlStripSep1;
+        private ToolStripSeparator TlStrip_Sep2;
         private ToolStripSplitButton TlStrip_btnMostrar;
         private ToolStripMenuItem TlStrip_btnMClientes;
         private ToolStripMenuItem TlStrip_btnMCuentas;
         private ToolStripMenuItem TlStrip_btnMTransacciones;
-        private ToolStripSeparator TlStrip_Sep2;
+        private ToolStripSeparator TlStrip_Sep3;
         private ToolStripProgressBar TlStrip_prgBar;
         private TableLayoutPanel tbLyPanelBc;
-        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripSeparator TlStrip_Sep1;
     }
 }

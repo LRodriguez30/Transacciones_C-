@@ -1,16 +1,27 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Transacciones_C_.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Transacciones_C_.ClasesDB;
 
 namespace Transacciones_C_.ManejadoresDB
 {
-    public class BusquedaDB
+    public class BusquedaDB : IBusquedaDB
     {
+        // INSTANCIABLE DESDE "ManejadorDB"
+        private BusquedaDB() {}
+
+        // Crear clase desde "ManejadorDB"
+        internal static BusquedaDB CrearBuscadorDB(ManejadorDB manejador)
+        {
+            return new BusquedaDB();
+        }
+
         // Realiza una búsqueda parametrizada
-        public void Busqueda(TextBox txtBxCriterio, ComboBox cmbBx, string source, TextBox? txtBxAlias, ComboBox cmbBxCOrigen, TextBox txtBxBuscarACDestino)
+        public void BusquedaCuentas(TextBox txtBxCriterio, ComboBox cmbBx, string cuenta, TextBox? txtBxAlias, ComboBox cmbBxCOrigen, TextBox txtBxBuscarACDestino)
         {
             // INICIO DE LA BÚSQUEDA
 
@@ -34,12 +45,12 @@ namespace Transacciones_C_.ManejadoresDB
                     // Añadimos resultados
                     foreach (var result in results)
                     {
-                        if (source == "Origen")
+                        if (cuenta == "Origen")
                         {
                             // Se añaden todas las cuentas disponibles para ese criterio
                             cmbBx.Items.Add(result);
                         }
-                        else if (source == "Destino")
+                        else if (cuenta == "Destino")
                         {
                             // Se integran todos los resultados menos el ya seleccionado en la cuenta de origen
                             if (result != cmbBxCOrigen.SelectedItem?.ToString())
@@ -51,7 +62,12 @@ namespace Transacciones_C_.ManejadoresDB
                 }
                 else
                 {
-                    MessageBox.Show("No se encontraron coincidencias.");
+                    MessageBox.Show(
+                        "No se encontraron coincidencias.",
+                        "Bancanet / Buscador",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
 
                     if (txtBxAlias != null)
                     {

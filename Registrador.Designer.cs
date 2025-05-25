@@ -47,6 +47,7 @@
             // txtBxNombre
             // 
             txtBxNombre.Location = new Point(146, 46);
+            txtBxNombre.MaxLength = 256;
             txtBxNombre.Name = "txtBxNombre";
             txtBxNombre.Size = new Size(171, 23);
             txtBxNombre.TabIndex = 0;
@@ -54,6 +55,7 @@
             // txtBxIdentificacion
             // 
             txtBxIdentificacion.Location = new Point(146, 75);
+            txtBxIdentificacion.MaxLength = 14;
             txtBxIdentificacion.Name = "txtBxIdentificacion";
             txtBxIdentificacion.Size = new Size(171, 23);
             txtBxIdentificacion.TabIndex = 2;
@@ -101,6 +103,7 @@
             // txtBxNumeroC
             // 
             txtBxNumeroC.Location = new Point(146, 161);
+            txtBxNumeroC.MaxLength = 20;
             txtBxNumeroC.Name = "txtBxNumeroC";
             txtBxNumeroC.Size = new Size(171, 23);
             txtBxNumeroC.TabIndex = 7;
@@ -108,6 +111,7 @@
             // txtBxSaldoI
             // 
             txtBxSaldoI.Location = new Point(146, 190);
+            txtBxSaldoI.MaxLength = 23;
             txtBxSaldoI.Name = "txtBxSaldoI";
             txtBxSaldoI.Size = new Size(171, 23);
             txtBxSaldoI.TabIndex = 9;

@@ -4,11 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Transacciones_C_.ClasesDB;
+using Transacciones_C_.Interfaces;
 
 namespace Transacciones_C_.ManejadoresDB
 {
-    public class RegistrarDB
+    public class RegistrarDB : IRegistrarDB
     {
+        private RegistrarDB() {}
+
+        internal static RegistrarDB CrearRegistradorDB(ManejadorDB manejador)
+        {
+            return new RegistrarDB();
+        }
+
         // Crea un nuevo cliente
         public Cliente NuevoCliente(BancoDB db, TextBox txtBxNombre, TextBox txtBxIdentificacion)
         {

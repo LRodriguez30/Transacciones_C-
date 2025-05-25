@@ -274,6 +274,7 @@
             txtBxBuscarCCDestino.Name = "txtBxBuscarCCDestino";
             txtBxBuscarCCDestino.Size = new Size(127, 23);
             txtBxBuscarCCDestino.TabIndex = 17;
+            txtBxBuscarCCDestino.TextChanged += txtBxBuscarCCDestino_TextChanged;
             // 
             // txtBxAliasCDestino
             // 
@@ -306,7 +307,7 @@
             MaximizeBox = false;
             Name = "Transferencia";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Transferencia / Bancanet";
+            Text = "Bancanet / Transferencia";
             PanelCOrigen.ResumeLayout(false);
             PanelCOrigen.PerformLayout();
             PanelCDestino.ResumeLayout(false);

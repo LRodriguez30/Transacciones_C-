@@ -15,17 +15,31 @@ namespace Transacciones_C_
 {
     public partial class Registrador : Form
     {
+        private BancoDB db;
         private ManejadorDB manejadorDB;
-        public Registrador()
+
+        public Registrador(BancoDB db, ManejadorDB manejadorDB)
         {
             InitializeComponent();
-            manejadorDB = new ManejadorDB();
+
+            this.db = db;
+            this.manejadorDB = manejadorDB;
         }
 
         // Registramos tanto al cliente como la cuenta
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
-            using (var db = new BancoDB())
+            if (string.IsNullOrEmpty(txtBxNombre.Text) || string.IsNullOrEmpty(txtBxIdentificacion.Text) ||
+                string.IsNullOrEmpty(txtBxNumeroC.Text) || string.IsNullOrEmpty(txtBxSaldoI.Text.Substring(2)))
+            {
+                MessageBox.Show(
+                    "Por favor, llene todos los campos solicitados.",
+                    "Bancanet / Registrador",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
 
             try
             {
@@ -35,7 +49,8 @@ namespace Transacciones_C_
             catch (Exception)
             {
                 MessageBox.Show(
-                    "Ha ocurrido un error...",
+                    "Ha ocurrido un error al crear la cuenta.\n\n" +
+                    "Por favor, intente nuevamente.",
                     "Bancanet / Registrador",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
@@ -62,13 +77,11 @@ namespace Transacciones_C_
                     if (Saldo.StartsWith("."))
                     {
                         txtBxSaldoI.Text = "C$";
-                        //VerificarDatos();
                     }
                     else if (Saldo.EndsWith("."))
                     {
                         // Eliminar simbolos especiales para evitar errores
                         txtBxSaldoI.Text = $"C${Regex.Replace(Saldo, @"[^a-zA-Z0-9\s.$]", "")}";
-                        //VerificarDatos();
                     }
                     else
                     {
@@ -77,7 +90,6 @@ namespace Transacciones_C_
 
                         // Eliminar caracteres no válidos y reescribir el monto
                         txtBxSaldoI.Text = $"C${new string(Saldo.Where(c => char.IsDigit(c) || c == '.').ToArray())}";
-                        //VerificarDatos();
                     }
                 }
             }
@@ -86,12 +98,10 @@ namespace Transacciones_C_
                 string Precio = txtBxSaldoI.Text.Substring(1);
 
                 txtBxSaldoI.Text = $"C${Precio}";
-                //VerificarDatos();
             }
             else
             {
                 txtBxSaldoI.Text = $"C$";
-                //VerificarDatos();
             }
         }
     }
