@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Transacciones_C_.ClasesDB
 {
-    // Tabla de transacciones
     public class Transaccion
     {
         public int TransaccionId { get; set; }
