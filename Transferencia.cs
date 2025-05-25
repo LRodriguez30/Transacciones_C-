@@ -135,7 +135,7 @@ namespace Transacciones_C_
         // Verificamos el criterio de búsqueda cada vez que se ingresa un valor diferente
         private void txtBxBuscarACOrigen_TextChanged(object sender, EventArgs e)
         {
-            // Ignoramos evento
+            // Ignoramos a propósito el evento para evitar recursividad no controlada
             if (ignorarEvento) return;
 
             if (!string.IsNullOrEmpty(txtBxBuscarACOrigen.Text))
@@ -161,8 +161,9 @@ namespace Transacciones_C_
             if (!string.IsNullOrEmpty(txtBxBuscarACOrigen.Text))
             {
                 txtBxBuscarACDestino.Enabled = true;
+                txtBxBuscarCCDestino.Enabled = true;
                 txtBxBuscarCCOrigen.Enabled = false;
-                manejadorDB.buscador.BusquedaCuentas(txtBxBuscarACOrigen, cmbBxCOrigen, "Origen", txtBxAliasCOrigen, cmbBxCOrigen, txtBxBuscarACDestino);
+                manejadorDB.buscador.BusquedaCuentas(txtBxBuscarACOrigen, cmbBxCOrigen, "Origen", txtBxAliasCOrigen, cmbBxCOrigen, txtBxBuscarACDestino, txtBxBuscarCCDestino, "NombreCliente");
 
                 if (cmbBxCOrigen.Items.Count > 0)
                 {
@@ -172,6 +173,7 @@ namespace Transacciones_C_
             else
             {
                 txtBxBuscarACDestino.Enabled = false;
+                txtBxBuscarCCDestino.Enabled = false;
                 txtBxBuscarCCOrigen.Enabled = true;
                 cmbBxCOrigen.Items.Clear();
                 cmbBxCDestino.Items.Clear();
@@ -185,13 +187,51 @@ namespace Transacciones_C_
         // Verificamos el criterio de búsqueda cada vez que se ingresa un valor diferente
         private void txtBxCCOrigen_TextChanged(object sender, EventArgs e)
         {
+            // Ignoramos a propósito el evento para evitar recursividad no controlada
+            if (ignorarEvento) return;
+
             if (!string.IsNullOrEmpty(txtBxBuscarCCOrigen.Text))
             {
+                string cuentaOrigen = txtBxBuscarCCOrigen.Text;
+
+                // Reescribir formato si contiene caracteres no válidos
+                if (Regex.IsMatch(cuentaOrigen, @"[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9]"))
+                {
+                    // Nos ayuda a evitar recursividad al activar el evento TextChanged
+                    ignorarEvento = true;
+
+                    // Activa el evento TextChanged
+                    txtBxBuscarCCOrigen.Text = $"{Regex.Replace(cuentaOrigen, @"[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9]", "")}";
+
+                    // Definimos que el evento se ejecutará completo luego de la operación
+                    ignorarEvento = false;
+                    return;
+                }
+            }
+
+
+            // Verificar que no esté vació el criterio de búsqueda
+            if (!string.IsNullOrEmpty(txtBxBuscarCCOrigen.Text))
+            {
+                txtBxBuscarACDestino.Enabled = true;
+                txtBxBuscarCCDestino.Enabled = true;
                 txtBxBuscarACOrigen.Enabled = false;
+                manejadorDB.buscador.BusquedaCuentas(txtBxBuscarCCOrigen, cmbBxCOrigen, "Origen", txtBxAliasCOrigen, cmbBxCOrigen, txtBxBuscarACDestino, txtBxBuscarCCDestino, "NumeroCuenta");
+
+                if (cmbBxCOrigen.Items.Count > 0)
+                {
+                    cmbBxCOrigen.SelectedIndex = 0;
+                }
             }
             else
             {
+                txtBxBuscarACDestino.Enabled = false;
+                txtBxBuscarCCDestino.Enabled = false;
                 txtBxBuscarACOrigen.Enabled = true;
+                cmbBxCOrigen.Items.Clear();
+                cmbBxCDestino.Items.Clear();
+                txtBxAliasCOrigen.Text = "";
+                txtBxAliasCDestino.Text = "";
             }
         }
 
@@ -226,7 +266,8 @@ namespace Transacciones_C_
             // Verificar que no esté vació el criterio de búsqueda
             if (!string.IsNullOrEmpty(txtBxBuscarACDestino.Text))
             {
-                manejadorDB.buscador.BusquedaCuentas(txtBxBuscarACDestino, cmbBxCDestino, "Destino", txtBxAliasCDestino, cmbBxCOrigen, txtBxBuscarACDestino);
+                txtBxBuscarCCDestino.Enabled = false;
+                manejadorDB.buscador.BusquedaCuentas(txtBxBuscarACDestino, cmbBxCDestino, "Destino", txtBxAliasCDestino, cmbBxCOrigen, txtBxBuscarACDestino, txtBxBuscarCCDestino, "NombreCliente");
 
                 if (cmbBxCDestino.Items.Count > 0)
                 {
@@ -239,6 +280,7 @@ namespace Transacciones_C_
             }
             else
             {
+                txtBxBuscarCCDestino.Enabled = true;
                 cmbBxCDestino.Items.Clear();
                 txtBxAliasCDestino.Text = "";
             }
@@ -248,13 +290,44 @@ namespace Transacciones_C_
         // Verificamos el criterio de búsqueda cada vez que se ingresa un valor diferente
         private void txtBxBuscarCCDestino_TextChanged(object sender, EventArgs e)
         {
+            // Ignoramos a propósito el evento para evitar recursividad no controlada
+            if (ignorarEvento) return;
+
+            if (!string.IsNullOrEmpty(txtBxBuscarCCDestino.Text))
+            {
+                string cuentaDestino = txtBxBuscarCCDestino.Text;
+
+                // Reescribir formato si contiene caracteres no válido
+                if (Regex.IsMatch(cuentaDestino, @"[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9]"))
+                {
+                    // Nos ayuda a evitar recursividad al activar el evento TextChanged
+                    ignorarEvento = true;
+
+                    // Activa el evento TextChanged
+                    txtBxBuscarACDestino.Text = $"{Regex.Replace(cuentaDestino, @"[^a-zA-ZáéíóúÁÉÍÓÚñÑ0-9]", "")}";
+
+                    // Definimos que el evento se ejecutará completo luego de la operación
+                    ignorarEvento = false;
+                    return;
+                }
+            }
+
+            // Verificar que no esté vació el criterio de búsqueda
             if (!string.IsNullOrEmpty(txtBxBuscarCCDestino.Text))
             {
                 txtBxBuscarACDestino.Enabled = false;
+                manejadorDB.buscador.BusquedaCuentas(txtBxBuscarCCDestino, cmbBxCDestino, "Destino", txtBxAliasCDestino, cmbBxCOrigen, txtBxBuscarACDestino, txtBxBuscarCCDestino, "NumeroCuenta");
+
+                if (cmbBxCDestino.Items.Count > 0)
+                {
+                    cmbBxCDestino.SelectedIndex = 0;
+                }
             }
             else
             {
                 txtBxBuscarACDestino.Enabled = true;
+                cmbBxCDestino.Items.Clear();
+                txtBxAliasCDestino.Text = "";
             }
         }
 
@@ -267,18 +340,16 @@ namespace Transacciones_C_
             // Obtener la cuenta seleccionada
             var numeroCuenta = cmbBxCOrigen.SelectedItem?.ToString();
 
-            using (var db = new BancoDB())
-
-                txtBxAliasCOrigen.Text = db.Cuentas
-                        .Where(c => c.NumeroCuenta == numeroCuenta)
-                        .Select(cl => cl.Cliente.Nombre)
-                        .FirstOrDefault();
+            txtBxAliasCOrigen.Text = db.Cuentas
+                    .Where(c => c.NumeroCuenta == numeroCuenta)
+                    .Select(cl => cl.Cliente.Nombre)
+                    .FirstOrDefault();
 
             // Verificar si el criterio de búsqueda no está vacío
             if (!string.IsNullOrEmpty(txtBxBuscarACDestino.Text))
             {
                 // Verificar si ya se tiene un criterio de busqueda para la cuenta de destino
-                manejadorDB.buscador.BusquedaCuentas(txtBxBuscarACDestino, cmbBxCDestino, "Destino", null, cmbBxCOrigen, txtBxBuscarACDestino);
+                manejadorDB.buscador.BusquedaCuentas(txtBxBuscarACDestino, cmbBxCDestino, "Destino", null, cmbBxCOrigen, txtBxBuscarACDestino, txtBxBuscarCCDestino, "NombreCliente");
                 cmbBxCDestino.SelectedIndex = 0;
             }
             else

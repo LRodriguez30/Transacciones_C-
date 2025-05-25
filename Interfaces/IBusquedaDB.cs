@@ -8,6 +8,6 @@ namespace Transacciones_C_.Interfaces
 {
     public interface IBusquedaDB
     {
-        void BusquedaCuentas(TextBox txtBxCriterio, ComboBox cmbBx, string tabla, TextBox? txtBxAlias, ComboBox cmbBxCOrigen, TextBox txtBxBuscarACDestino);
+        void BusquedaCuentas(TextBox txtBxCriterio, ComboBox cmbBx, string tabla, TextBox? txtBxAlias, ComboBox cmbBxCOrigen, TextBox txtBxBuscarACDestino, TextBox txtBcBuscarCCDestino, string filtro);
     }
 }

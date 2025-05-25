@@ -1,11 +1,12 @@
-﻿using System;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using Transacciones_C_.Interfaces;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Transacciones_C_.ClasesDB;
+using Transacciones_C_.Interfaces;
 
 namespace Transacciones_C_.ManejadoresDB
 {
@@ -21,7 +22,7 @@ namespace Transacciones_C_.ManejadoresDB
         }
 
         // Realiza una búsqueda parametrizada
-        public void BusquedaCuentas(TextBox txtBxCriterio, ComboBox cmbBx, string cuenta, TextBox? txtBxAlias, ComboBox cmbBxCOrigen, TextBox txtBxBuscarACDestino)
+        public void BusquedaCuentas(TextBox txtBxCriterio, ComboBox cmbBx, string cuenta, TextBox? txtBxAlias, ComboBox cmbBxCOrigen, TextBox txtBxBuscarACDestino, TextBox txtBxBuscarCCDestino, string filtro)
         {
             // INICIO DE LA BÚSQUEDA
 
@@ -31,31 +32,46 @@ namespace Transacciones_C_.ManejadoresDB
             using (var db = new BancoDB())
             {
                 // Obtenemos las cuentas que cumplan con el criterio de búsqueda
-                var results = db.Cuentas
-                    .Where(c =>
-                        EF.Functions.Like(c.Cliente.Nombre, $"{txtBxCriterio.Text}%")
-                    )
-                    .Select(c =>
-                        c.NumeroCuenta
-                    ).ToList();
+
+                List<string> resultados = new List<string>();
+
+                if (filtro == "NumeroCuenta") {
+                    resultados = db.Cuentas
+                        .Where(c =>
+                            EF.Functions.Like(c.NumeroCuenta, $"{txtBxCriterio.Text}%")
+                        )
+                        .Select(c =>
+                            c.NumeroCuenta
+                        ).ToList();
+                }
+                else if (filtro == "NombreCliente")
+                {
+                    resultados = db.Cuentas
+                        .Where(c =>
+                            EF.Functions.Like(c.Cliente.Nombre, $"{txtBxCriterio.Text}%")
+                        )
+                        .Select(c =>
+                            c.NumeroCuenta
+                        ).ToList();
+                }
 
                 // Verificamos si hay resultados
-                if (results.Count > 0)
+                if (resultados.Count > 0)
                 {
                     // Añadimos resultados
-                    foreach (var result in results)
+                    foreach (var resultado in resultados)
                     {
                         if (cuenta == "Origen")
                         {
                             // Se añaden todas las cuentas disponibles para ese criterio
-                            cmbBx.Items.Add(result);
+                            cmbBx.Items.Add(resultado);
                         }
                         else if (cuenta == "Destino")
                         {
                             // Se integran todos los resultados menos el ya seleccionado en la cuenta de origen
-                            if (result != cmbBxCOrigen.SelectedItem?.ToString())
+                            if (resultado != cmbBxCOrigen.SelectedItem?.ToString())
                             {
-                                cmbBx.Items.Add(result);
+                                cmbBx.Items.Add(resultado);
                             }
                         }
                     }
@@ -74,7 +90,6 @@ namespace Transacciones_C_.ManejadoresDB
                         txtBxAlias.Text = "";
                     }
 
-                    txtBxBuscarACDestino.Enabled = false;
                     return;
                 }
             }
