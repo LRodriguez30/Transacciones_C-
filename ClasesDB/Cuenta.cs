@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Transacciones_C_.ClasesDB
-{
+{ 
+    //Tabla de cuentas
     public class Cuenta
     {
         public int CuentaId { get; set; }

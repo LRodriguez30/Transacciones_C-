@@ -7,6 +7,7 @@ using Transacciones_C_.ClasesDB;
 
 namespace Transacciones_C_.Interfaces
 {
+    // Interfas para el manejador de registro
     public interface IRegistrarDB
     {
         Cliente NuevoCliente(BancoDB db, TextBox txtBxNombre, TextBox txtBxIdentificacion);

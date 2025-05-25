@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Transacciones_C_.ClasesDB
 {
+    // Tabla de clientes 
     public class Cliente
     {
         public int ClienteId { get; set; }
